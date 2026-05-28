@@ -20,6 +20,7 @@ function buildGeminiPrompt(description: string, mode: string) {
    - NO truncated or incomplete code
    - Write complete, production-ready, fully functional code
    - Include error states, loading states, empty states, and fallbacks
+   - Do not stop generation early; keep producing content until the prompt is fully complete
 5. INCLUDE EXACT SPECIFICATIONS:
    - Color hex codes or Tailwind class names for every element
    - Font weights and sizes for headings and body text
@@ -29,6 +30,7 @@ function buildGeminiPrompt(description: string, mode: string) {
    - Form field validations with error messages
    - User interaction feedback (hover, click, focus states)
 6. ELABORATE ON USER FLOWS: Describe step-by-step what happens when users interact with the app, including edge cases and error scenarios.
+7. FORCE COMPLETION: If the response is longer than one pass, include a clear continuation instruction at the end so the target AI keeps going until the full prompt is delivered.
 
 **MODE CONTEXT:**
 ${mode === '0% Stress Client-Side Only' ? 'Pure Vibe Mode: Absolutely ZERO external dependencies beyond React and Tailwind. Everything must work without installing extra packages. Maximum simplicity, maximum functionality.' : 'Builder Vibe Mode: Minimal packages allowed (only essentials like Tailwind, lucide-react). Keep dependencies to an absolute minimum but you can add 1-2 lightweight utility libraries if needed.'}
@@ -71,15 +73,16 @@ export async function POST(request: Request) {
         },
       ],
       generationConfig: {
-        temperature: 0.1,
-        maxOutputTokens: 2500,
+        temperature: 0.0,
+        topP: 1.0,
+        maxOutputTokens: 4096,
       },
     }),
   });
 
   if (!response.ok) {
     const errorBody = await response.text();
-    return NextResponse.json({ error: `Gemini request failed: ${response.statusText}`, details: errorBody }, { status: response.status });
+    return NextResponse.json({ error: `PromptViber request failed: ${response.statusText}`, details: errorBody }, { status: response.status });
   }
 
   const data = await response.json();
