@@ -77,11 +77,11 @@ export default function HomePage() {
         <header className="flex flex-col gap-6 rounded-3xl border border-slate-800 bg-slate-950/90 p-8 shadow-glow backdrop-blur-xl">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-sky-400/70">VibePrompt AI</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-purple-400/70">VibePrompt AI</p>
               <h1 className="mt-3 text-4xl font-semibold text-white sm:text-5xl">Stress-free prompts for vibe coders.</h1>
             </div>
             <div className="rounded-3xl bg-slate-900/90 px-4 py-3 text-sm text-slate-300 ring-1 ring-slate-700">
-              <Sparkles className="mr-2 inline-block h-5 w-5 text-sky-400" />
+              <Sparkles className="mr-2 inline-block h-5 w-5 text-cyan-400" />
               Build instantly, no guesswork.
             </div>
           </div>
@@ -93,13 +93,13 @@ export default function HomePage() {
         <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-6 rounded-3xl border border-slate-800 bg-slate-950/90 p-6 shadow-glow backdrop-blur-xl">
             <div className="space-y-3">
-              <p className="text-sm uppercase tracking-[0.3em] text-sky-400/80">Your website idea</p>
+              <p className="text-sm uppercase tracking-[0.3em] text-purple-400/80">Your website idea</p>
               <textarea
                 rows={10}
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
                 placeholder="e.g. A neon portfolio landing page for a crypto-focused creative studio with animated cards and a data dashboard."
-                className="w-full resize-none rounded-3xl border border-slate-800 bg-slate-950 px-5 py-5 text-sm text-slate-100 outline-none transition focus:border-sky-400/80 focus:ring-2 focus:ring-sky-500/20"
+                className="w-full resize-none rounded-3xl border border-slate-800 bg-slate-950 px-5 py-5 text-sm text-slate-100 outline-none transition focus:border-purple-400/80 focus:ring-2 focus:ring-cyan-500/20"
               />
             </div>
 
@@ -111,7 +111,7 @@ export default function HomePage() {
                   onClick={() => setMode(option.id)}
                   className={`rounded-3xl border px-5 py-4 text-left transition duration-200 ${
                     mode === option.id
-                      ? 'border-sky-400 bg-slate-900 text-slate-100 shadow-glow'
+                      ? 'border-purple-400 bg-slate-900 text-slate-100 shadow-glow'
                       : 'border-slate-800 bg-slate-950 text-slate-300 hover:border-slate-700 hover:bg-slate-900'
                   }`}
                 >
@@ -127,7 +127,7 @@ export default function HomePage() {
                 type="button"
                 onClick={handleGenerate}
                 disabled={loading}
-                className="inline-flex items-center justify-center gap-3 rounded-3xl bg-sky-400 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-500/20 transition hover:bg-sky-300 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-3 rounded-3xl bg-purple-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 transition hover:bg-purple-400 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
                 {loading ? 'Generating...' : 'Generate Prompt'}
@@ -140,7 +140,7 @@ export default function HomePage() {
           <div className="rounded-3xl border border-slate-800 bg-slate-950/90 p-6 shadow-glow backdrop-blur-xl">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-sky-400/80">Output</p>
+                <p className="text-xs uppercase tracking-[0.3em] text-cyan-400/80">Output</p>
                 <h2 className="mt-2 text-2xl font-semibold text-white">Copy-ready Viber prompt</h2>
               </div>
               <button
@@ -157,7 +157,7 @@ export default function HomePage() {
             <div className="rounded-3xl border border-slate-800 bg-slate-950 p-5 text-sm leading-6 text-slate-300 max-h-96 overflow-y-auto">
               {loading ? (
                 <div className="flex min-h-[240px] flex-col items-center justify-center gap-3 text-slate-500">
-                  <Loader2 className="h-8 w-8 animate-spin text-sky-400" />
+                  <Loader2 className="h-8 w-8 animate-spin text-cyan-400" />
                   <p>Viber is crafting your output. Hold tight.</p>
                 </div>
               ) : result ? (
