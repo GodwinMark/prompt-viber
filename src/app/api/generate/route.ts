@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const GEMINI_URL = process.env.GEMINI_API_URL || 'https://gemini.googleapis.com/v1/models/text-bison-001:generate';
+const GEMINI_URL = process.env.GEMINI_API_URL || 'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 function buildGeminiPrompt(description: string, mode: string) {
@@ -31,6 +31,7 @@ function buildGeminiPrompt(description: string, mode: string) {
    - User interaction feedback (hover, click, focus states)
 6. ELABORATE ON USER FLOWS: Describe step-by-step what happens when users interact with the app, including edge cases and error scenarios.
 7. FORCE COMPLETION: If the response is longer than one pass, include a clear continuation instruction at the end so the target AI keeps going until the full prompt is delivered.
+8. MINIMUM LENGTH: For a moderately complex website, the prompt should be at least 100 lines long. If needed, continue writing until the full prompt is complete and the final sentence is finished.
 
 **MODE CONTEXT:**
 ${mode === '0% Stress Client-Side Only' ? 'Pure Vibe Mode: Absolutely ZERO external dependencies beyond React and Tailwind. Everything must work without installing extra packages. Maximum simplicity, maximum functionality.' : 'Builder Vibe Mode: Minimal packages allowed (only essentials like Tailwind, lucide-react). Keep dependencies to an absolute minimum but you can add 1-2 lightweight utility libraries if needed.'}
@@ -75,7 +76,7 @@ export async function POST(request: Request) {
       generationConfig: {
         temperature: 0.0,
         topP: 1.0,
-        maxOutputTokens: 4096,
+        maxOutputTokens: 8192,
       },
     }),
   });
