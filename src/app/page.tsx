@@ -16,14 +16,41 @@ const modes = [
   },
 ];
 
+const taskTypes = [
+  {
+    id: 'website',
+    label: 'Website',
+    subtitle: 'Generate a website prompt',
+  },
+  {
+    id: 'image',
+    label: 'Image',
+    subtitle: 'Generate an image prompt',
+  },
+];
+
 export default function HomePage() {
   const [description, setDescription] = useState('');
   const [mode, setMode] = useState('pure');
+  const [taskType, setTaskType] = useState('website');
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
   const [showSplash, setShowSplash] = useState(true);
+
+  const taskLabel = useMemo(
+    () => (taskType === 'website' ? 'website' : 'image'),
+    [taskType]
+  );
+
+  const promptPlaceholder = useMemo(
+    () =>
+      taskType === 'website'
+        ? 'e.g. A neon portfolio landing page for a crypto-focused creative studio with animated cards and a data dashboard.'
+        : 'e.g. A vibrant fantasy landscape with glowing turquoise crystals, dramatic lighting, and a cinematic camera perspective.',
+    [taskType]
+  );
 
   const modeLabel = useMemo(
     () => (mode === 'pure' ? '0% Stress Client-Side Only' : 'Low-Stress Modular Structure'),
@@ -54,7 +81,7 @@ export default function HomePage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ description, mode: modeLabel }),
+        body: JSON.stringify({ description, mode: modeLabel, taskType }),
       });
 
       const data = await response.json();
@@ -115,7 +142,7 @@ export default function HomePage() {
             </div>
           </div>
           <p className="max-w-2xl text-slate-400 sm:text-lg">
-            Enter a casual website idea and get back a complete, copy-paste Viber prompt built for low-stress, modern developer workflows.
+            Enter a casual website or image idea and get back a complete, copy-paste Viber prompt built for low-stress, modern creative workflows.
           </p>
         </header>
 
@@ -127,9 +154,27 @@ export default function HomePage() {
                 rows={10}
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
-                placeholder="e.g. A neon portfolio landing page for a crypto-focused creative studio with animated cards and a data dashboard."
+                placeholder={promptPlaceholder}
                 className="w-full resize-none rounded-3xl border border-slate-800 bg-slate-950 px-5 py-5 text-sm text-slate-100 outline-none transition focus:border-purple-400/80 focus:ring-2 focus:ring-cyan-500/20"
               />
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {taskTypes.map((option) => (
+                <button
+                  type="button"
+                  key={option.id}
+                  onClick={() => setTaskType(option.id)}
+                  className={`rounded-3xl border px-5 py-4 text-left transition duration-200 ${
+                    taskType === option.id
+                      ? 'border-cyan-400 bg-slate-900 text-slate-100 shadow-glow'
+                      : 'border-slate-800 bg-slate-950 text-slate-300 hover:border-slate-700 hover:bg-slate-900'
+                  }`}
+                >
+                  <p className="font-semibold">{option.label}</p>
+                  <p className="mt-1 text-xs text-slate-400">{option.subtitle}</p>
+                </button>
+              ))}
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -170,7 +215,7 @@ export default function HomePage() {
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs uppercase tracking-[0.3em] text-cyan-400/80">Output</p>
-                <h2 className="mt-2 text-2xl font-semibold text-white">Copy-ready Viber prompt</h2>
+                <h2 className="mt-2 text-2xl font-semibold text-white">Copy-ready Viber {taskLabel} prompt</h2>
               </div>
               <button
                 type="button"
