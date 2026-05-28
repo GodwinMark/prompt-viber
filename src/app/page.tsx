@@ -92,11 +92,11 @@ export default function HomePage() {
               animation-delay: 1.2s;
             }
           `}</style>
-          <div className="splash-text flex flex-col items-center gap-6">
-            <h1 className="text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500">
+          <div className="splash-text flex flex-col items-center gap-6 px-4">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500">
               PROMPTVIBER
             </h1>
-            <div className="h-1 w-32 rounded-full bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500"></div>
+            <div className="h-1 w-24 sm:w-32 rounded-full bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500"></div>
           </div>
         </div>
       )}
@@ -183,7 +183,7 @@ export default function HomePage() {
               </button>
             </div>
 
-            <div className="rounded-3xl border border-slate-800 bg-slate-950 p-5 text-sm leading-6 text-slate-300 max-h-96 overflow-y-auto">
+            <div className="rounded-3xl border border-slate-800 bg-slate-950 p-5 text-sm leading-6 text-slate-300 max-h-[600px] overflow-y-auto">
               {loading ? (
                 <div className="flex min-h-[240px] flex-col items-center justify-center gap-3 text-slate-500">
                   <Loader2 className="h-8 w-8 animate-spin text-cyan-400" />
