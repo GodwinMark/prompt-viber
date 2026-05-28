@@ -94,15 +94,15 @@ export default function HomePage() {
           `}</style>
           <div className="splash-text flex flex-col items-center gap-6 px-4">
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500">
-              PROMPTVIBER
+              PromptViber
             </h1>
             <div className="h-1 w-24 sm:w-32 rounded-full bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500"></div>
           </div>
         </div>
       )}
-      <main className={`relative min-h-screen overflow-hidden bg-slate-950 px-6 py-10 sm:px-10 transition-opacity duration-1000 ${showSplash ? 'opacity-0' : 'opacity-100'}`}>
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-slate-800/80 via-slate-950 to-transparent blur-3xl" />
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10">
+      <main className={`relative min-h-screen bg-slate-950 px-6 py-10 sm:px-10 transition-opacity duration-1000 ${showSplash ? 'opacity-0' : 'opacity-100'}`}>
+      <div className="pointer-events-none fixed inset-x-0 top-0 h-96 bg-gradient-to-b from-slate-800/80 via-slate-950 to-transparent blur-3xl" />
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 min-h-full">
         <header className="flex flex-col gap-6 rounded-3xl border border-slate-800 bg-slate-950/90 p-8 shadow-glow backdrop-blur-xl">
           <div className="flex items-center justify-between gap-4">
             <div>
@@ -119,7 +119,7 @@ export default function HomePage() {
           </p>
         </header>
 
-        <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+        <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] flex-1">
           <div className="space-y-6 rounded-3xl border border-slate-800 bg-slate-950/90 p-6 shadow-glow backdrop-blur-xl">
             <div className="space-y-3">
               <p className="text-sm uppercase tracking-[0.3em] text-purple-400/80">Your website idea</p>
@@ -166,7 +166,7 @@ export default function HomePage() {
             {error ? <p className="rounded-3xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{error}</p> : null}
           </div>
 
-          <div className="rounded-3xl border border-slate-800 bg-slate-950/90 p-6 shadow-glow backdrop-blur-xl">
+          <div className="rounded-3xl border border-slate-800 bg-slate-950/90 p-6 shadow-glow backdrop-blur-xl flex flex-col h-fit lg:sticky lg:top-10">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs uppercase tracking-[0.3em] text-cyan-400/80">Output</p>
@@ -183,7 +183,7 @@ export default function HomePage() {
               </button>
             </div>
 
-            <div className="rounded-3xl border border-slate-800 bg-slate-950 p-5 text-sm leading-6 text-slate-300 max-h-[600px] overflow-y-auto">
+            <div className="rounded-3xl border border-slate-800 bg-slate-950 p-5 text-sm leading-6 text-slate-300 overflow-y-auto flex-1" style={{ maxHeight: 'calc(100vh - 300px)' }}>
               {loading ? (
                 <div className="flex min-h-[240px] flex-col items-center justify-center gap-3 text-slate-500">
                   <Loader2 className="h-8 w-8 animate-spin text-cyan-400" />
