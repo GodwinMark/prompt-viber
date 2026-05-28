@@ -154,7 +154,7 @@ export default function HomePage() {
               </button>
             </div>
 
-            <div className="rounded-3xl border border-slate-800 bg-slate-950 p-5 text-sm leading-6 text-slate-300">
+            <div className="rounded-3xl border border-slate-800 bg-slate-950 p-5 text-sm leading-6 text-slate-300 max-h-96 overflow-y-auto">
               {loading ? (
                 <div className="flex min-h-[240px] flex-col items-center justify-center gap-3 text-slate-500">
                   <Loader2 className="h-8 w-8 animate-spin text-sky-400" />
