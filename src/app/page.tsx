@@ -66,7 +66,7 @@ export default function HomePage() {
 
   async function handleGenerate() {
     if (!description.trim()) {
-      setError('Enter a website idea to unlock your prompt.');
+      setError('Enter an idea to unlock your prompt.');
       return;
     }
 
@@ -149,7 +149,7 @@ export default function HomePage() {
         <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] flex-1">
           <div className="space-y-6 rounded-3xl border border-slate-800 bg-slate-950/90 p-6 shadow-glow backdrop-blur-xl">
             <div className="space-y-3">
-              <p className="text-sm uppercase tracking-[0.3em] text-purple-400/80">Your website idea</p>
+              <p className="text-sm uppercase tracking-[0.3em] text-purple-400/80">Your idea</p>
               <textarea
                 rows={10}
                 value={description}
