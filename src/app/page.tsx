@@ -86,7 +86,7 @@ export default function HomePage() {
             </div>
           </div>
           <p className="max-w-2xl text-slate-400 sm:text-lg">
-            Enter a casual website idea and get back a complete, copy-paste Gemini prompt built for low-stress, modern developer workflows.
+            Enter a casual website idea and get back a complete, copy-paste Viber prompt built for low-stress, modern developer workflows.
           </p>
         </header>
 
@@ -141,7 +141,7 @@ export default function HomePage() {
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs uppercase tracking-[0.3em] text-sky-400/80">Output</p>
-                <h2 className="mt-2 text-2xl font-semibold text-white">Copy-ready Gemini prompt</h2>
+                <h2 className="mt-2 text-2xl font-semibold text-white">Copy-ready Viber prompt</h2>
               </div>
               <button
                 type="button"
@@ -158,7 +158,7 @@ export default function HomePage() {
               {loading ? (
                 <div className="flex min-h-[240px] flex-col items-center justify-center gap-3 text-slate-500">
                   <Loader2 className="h-8 w-8 animate-spin text-sky-400" />
-                  <p>Gemini is crafting your output. Hold tight.</p>
+                  <p>Viber is crafting your output. Hold tight.</p>
                 </div>
               ) : result ? (
                 <pre className="whitespace-pre-wrap break-words text-slate-100">{result}</pre>
