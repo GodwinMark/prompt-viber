@@ -1,7 +1,7 @@
 'use client';
 
 import { Copy, Loader2, Sparkles } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const modes = [
   {
@@ -23,11 +23,19 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
+  const [showSplash, setShowSplash] = useState(true);
 
   const modeLabel = useMemo(
     () => (mode === 'pure' ? '0% Stress Client-Side Only' : 'Low-Stress Modular Structure'),
     [mode]
   );
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setShowSplash(false);
+    }, 1700);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   async function handleGenerate() {
     if (!description.trim()) {
@@ -71,7 +79,28 @@ export default function HomePage() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-950 px-6 py-10 sm:px-10">
+    <>
+      {showSplash && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950">
+          <style>{`
+            @keyframes fadeOut {
+              0% { opacity: 1; }
+              100% { opacity: 0; }
+            }
+            .splash-text {
+              animation: fadeOut 0.5s ease-in-out forwards;
+              animation-delay: 1.2s;
+            }
+          `}</style>
+          <div className="splash-text flex flex-col items-center gap-6">
+            <h1 className="text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500">
+              PROMPTVIBER
+            </h1>
+            <div className="h-1 w-32 rounded-full bg-gradient-to-r from-purple-500 via-cyan-400 to-purple-500"></div>
+          </div>
+        </div>
+      )}
+      <main className={`relative min-h-screen overflow-hidden bg-slate-950 px-6 py-10 sm:px-10 transition-opacity duration-1000 ${showSplash ? 'opacity-0' : 'opacity-100'}`}>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-slate-800/80 via-slate-950 to-transparent blur-3xl" />
       <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10">
         <header className="flex flex-col gap-6 rounded-3xl border border-slate-800 bg-slate-950/90 p-8 shadow-glow backdrop-blur-xl">
@@ -173,5 +202,6 @@ export default function HomePage() {
         </section>
       </div>
     </main>
+    </>
   );
 }
