@@ -33,16 +33,25 @@ export async function POST(request: Request) {
 
   const prompt = buildGeminiPrompt(description, mode);
 
-  const response = await fetch(GEMINI_URL, {
+  const response = await fetch(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${GEMINI_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      prompt: { text: prompt },
-      temperature: 0.2,
-      maxOutputTokens: 900,
+      contents: [
+        {
+          parts: [
+            {
+              text: prompt,
+            },
+          ],
+        },
+      ],
+      generationConfig: {
+        temperature: 0.2,
+        maxOutputTokens: 900,
+      },
     }),
   });
 
@@ -53,7 +62,7 @@ export async function POST(request: Request) {
 
   const data = await response.json();
   const generatedPrompt =
-    data?.candidates?.[0]?.output || data?.output?.[0]?.content || data?.output || data?.text || 'No prompt returned from Gemini.';
+    data?.candidates?.[0]?.content?.parts?.[0]?.text || data?.text || 'No prompt returned from Gemini.';
 
   return NextResponse.json({ prompt: String(generatedPrompt).trim() });
 }
