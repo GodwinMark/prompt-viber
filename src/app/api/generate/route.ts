@@ -4,18 +4,40 @@ const GEMINI_URL = process.env.GEMINI_API_URL || 'https://gemini.googleapis.com/
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 function buildGeminiPrompt(description: string, mode: string) {
-  return `You are an expert Prompt Engineer specializing in "Vibecoding." Your job is to take a casual description of a website from the user and turn it into a highly detailed, single prompt that they can copy/paste directly into AI code generators like Bolt.new, Lovable, or v0.
+  return `You are an expert Prompt Engineer specializing in creating incredibly DETAILED, ELABORATE, and COMPREHENSIVE prompts for AI code generators. Your job is to transform a casual user description into an exhaustively detailed, single prompt that can be copy-pasted directly into Bolt.new, Lovable, or v0.
 
-Strictly adhere to these Zero-Stress Execution Rules in the output prompt you generate:
-1. NO TODOs: Command the target AI never to write placeholders, truncate code, or use "// TODO" comments. It must write complete, functional code.
-2. ZERO CONFIG: Tell the target AI to use a single-file structure or highly standard layouts that don't require configuring complex file systems.
-3. BUILT-IN MOCK DATA: Hardcode rich, realistic JSON arrays directly inside the code so the app works instantly without database configuration.
-4. NATIVE STYLING: Restrict all styling strictly to native Tailwind CSS classes and 'lucide-react' icons to prevent package install errors.
-5. EXPLICIT ERROR HANDLING: Instruct the target AI to build UI fallbacks (e.g., standard "No results found" states) so the UI never crashes during interaction.
+**YOUR CRITICAL INSTRUCTIONS:**
+1. BE EXTREMELY VERBOSE AND DETAILED: Include every single visual detail, interaction pattern, color scheme, layout element, animation, and functionality requirement - no exceptions.
+2. SPECIFY EVERY TINY DETAIL: Mention spacing, padding, font sizes, shadows, borders, hover states, animations, transitions, responsiveness breakpoints, button states, form validations - everything.
+3. ARCHITECTURE REQUIREMENTS:
+   - Single-file structure or simple modular layout (NO complex configurations)
+   - All styling MUST be Tailwind CSS only
+   - All icons MUST be lucide-react only
+   - Hardcode realistic, rich JSON mock data directly in the code
+   - No external APIs, no databases, no backends
+4. CODE QUALITY RULES:
+   - NO placeholder comments like "// TODO"
+   - NO truncated or incomplete code
+   - Write complete, production-ready, fully functional code
+   - Include error states, loading states, empty states, and fallbacks
+5. INCLUDE EXACT SPECIFICATIONS:
+   - Color hex codes or Tailwind class names for every element
+   - Font weights and sizes for headings and body text
+   - Exact pixel measurements for padding/margins where relevant
+   - Animation timings and easing functions if animations are needed
+   - Responsive breakpoints and how layout changes at each breakpoint
+   - Form field validations with error messages
+   - User interaction feedback (hover, click, focus states)
+6. ELABORATE ON USER FLOWS: Describe step-by-step what happens when users interact with the app, including edge cases and error scenarios.
 
-User App Description: ${description.trim()}
-Vibe Mode Selected: ${mode}
-`;
+**MODE CONTEXT:**
+${mode === '0% Stress Client-Side Only' ? 'Pure Vibe Mode: Absolutely ZERO external dependencies beyond React and Tailwind. Everything must work without installing extra packages. Maximum simplicity, maximum functionality.' : 'Builder Vibe Mode: Minimal packages allowed (only essentials like Tailwind, lucide-react). Keep dependencies to an absolute minimum but you can add 1-2 lightweight utility libraries if needed.'}
+
+**USER'S WEBSITE DESCRIPTION:**
+"${description.trim()}"
+
+**NOW GENERATE AN EXHAUSTIVELY DETAILED PROMPT:**
+Create a comprehensive, step-by-step prompt that instructs another AI to build this website. Be ridiculously detailed. Include every visual element, interaction, color, spacing, animation, and functionality requirement. Make the prompt so clear and detailed that following it results in a polished, production-ready app with zero ambiguity.`;
 }
 
 export async function POST(request: Request) {
@@ -49,8 +71,8 @@ export async function POST(request: Request) {
         },
       ],
       generationConfig: {
-        temperature: 0.2,
-        maxOutputTokens: 900,
+        temperature: 0.1,
+        maxOutputTokens: 2500,
       },
     }),
   });
