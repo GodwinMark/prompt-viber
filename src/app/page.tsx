@@ -38,6 +38,14 @@ export default function HomePage() {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
   const [showSplash, setShowSplash] = useState(true);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+
+  useEffect(() => {
+    const accepted = localStorage.getItem('vibePromptPrivacyAccepted') === 'true';
+    setPrivacyAccepted(accepted);
+    setShowPrivacyModal(!accepted);
+  }, []);
 
   const taskLabel = useMemo(
     () => (taskType === 'website' ? 'website' : 'image'),
@@ -65,6 +73,12 @@ export default function HomePage() {
   }, []);
 
   async function handleGenerate() {
+    if (!privacyAccepted) {
+      setError('Please agree to the privacy policy before generating prompts.');
+      setShowPrivacyModal(true);
+      return;
+    }
+
     if (!description.trim()) {
       setError('Enter an idea to unlock your prompt.');
       return;
@@ -105,8 +119,52 @@ export default function HomePage() {
     window.setTimeout(() => setCopied(false), 1800);
   }
 
+  function handleAcceptPrivacy() {
+    localStorage.setItem('vibePromptPrivacyAccepted', 'true');
+    setPrivacyAccepted(true);
+    setShowPrivacyModal(false);
+    setError('');
+  }
+
+  function handleDeclinePrivacy() {
+    setError('You must agree to the privacy policy to continue using VibePrompt AI.');
+  }
+
   return (
     <>
+      {showPrivacyModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 px-4 py-10">
+          <div className="w-full max-w-3xl rounded-3xl border border-slate-800 bg-slate-900 p-8 text-slate-100 shadow-2xl">
+            <div className="space-y-4">
+              <p className="text-sm uppercase tracking-[0.35em] text-cyan-400/80">Privacy agreement required</p>
+              <h2 className="text-3xl font-semibold text-white">Before you continue</h2>
+              <p className="text-slate-300 leading-8">
+                Please review and accept our privacy policy before using VibePrompt AI. We use privacy-safe processing and may include third-party services like Google AdSense.
+              </p>
+              <p className="text-slate-400">
+                <a href="/privacy" className="font-medium text-cyan-300 hover:text-cyan-200">View the full privacy policy</a>
+              </p>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                onClick={handleDeclinePrivacy}
+                className="rounded-3xl border border-slate-700 bg-slate-950 px-5 py-3 text-sm text-slate-200 transition hover:border-rose-400 hover:text-white"
+              >
+                Decline
+              </button>
+              <button
+                type="button"
+                onClick={handleAcceptPrivacy}
+                className="rounded-3xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400"
+              >
+                I agree
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {showSplash && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950">
           <style>{`
@@ -204,7 +262,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={handleGenerate}
-                disabled={loading}
+                disabled={loading || !privacyAccepted}
                 className="inline-flex items-center justify-center gap-3 rounded-3xl bg-purple-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 transition hover:bg-purple-400 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
