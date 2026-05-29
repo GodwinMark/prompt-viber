@@ -3,6 +3,28 @@ import { NextResponse } from 'next/server';
 const GEMINI_URL = process.env.GEMINI_API_URL || 'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
+async function fetchWithRetry(url: string, options: RequestInit, retries = 2) {
+  let attempt = 0;
+  while (attempt <= retries) {
+    const response = await fetch(url, options);
+    if (response.ok) {
+      return response;
+    }
+
+    const status = response.status;
+    if (status === 429 || status >= 500) {
+      const retryAfter = response.headers.get('Retry-After');
+      const waitMs = retryAfter ? Number(retryAfter) * 1000 : 1000 * (attempt + 1);
+      await new Promise((resolve) => setTimeout(resolve, waitMs));
+      attempt += 1;
+      continue;
+    }
+
+    return response;
+  }
+  return fetch(url, options);
+}
+
 function buildGeminiPrompt(description: string, mode: string, taskType: string) {
   const typeInstructions =
     taskType === 'image'
@@ -78,7 +100,7 @@ export async function POST(request: Request) {
 
   const prompt = buildGeminiPrompt(description, mode, taskType);
 
-  const response = await fetch(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
+  const response = await fetchWithRetry(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -103,7 +125,10 @@ export async function POST(request: Request) {
 
   if (!response.ok) {
     const errorBody = await response.text();
-    return NextResponse.json({ error: `PromptViber request failed: ${response.statusText}`, details: errorBody }, { status: response.status });
+    const message = response.status === 429
+      ? 'Too many requests. Please wait and try again in a few seconds.'
+      : `PromptViber request failed: ${response.statusText}`;
+    return NextResponse.json({ error: message, details: errorBody }, { status: response.status });
   }
 
   const data = await response.json();
