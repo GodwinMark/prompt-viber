@@ -131,15 +131,19 @@ export default function HomePage() {
       <div className="pointer-events-none fixed inset-x-0 top-0 h-96 bg-gradient-to-b from-slate-800/80 via-slate-950 to-transparent blur-3xl" />
       <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 min-h-full">
         <header className="flex flex-col gap-6 rounded-3xl border border-slate-800 bg-slate-950/90 p-8 shadow-glow backdrop-blur-xl">
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-purple-400/70">VibePrompt AI</p>
               <h1 className="mt-3 text-4xl font-semibold text-white sm:text-5xl">Stress-free prompts for vibe coders.</h1>
             </div>
-            <div className="rounded-3xl bg-slate-900/90 px-4 py-3 text-sm text-slate-300 ring-1 ring-slate-700">
-              <Sparkles className="mr-2 inline-block h-5 w-5 text-cyan-400" />
-              Build instantly, no guesswork.
+            <div className="flex flex-wrap gap-3 text-sm">
+              <a href="/about" className="rounded-3xl border border-slate-700 bg-slate-900/80 px-4 py-3 text-slate-200 transition hover:border-cyan-400 hover:text-white">About</a>
+              <a href="/privacy" className="rounded-3xl border border-slate-700 bg-slate-900/80 px-4 py-3 text-slate-200 transition hover:border-purple-400 hover:text-white">Privacy Policy</a>
             </div>
+          </div>
+          <div className="rounded-3xl bg-slate-900/80 p-5 text-slate-100 shadow-glow ring-1 ring-slate-700">
+            <Sparkles className="mr-2 inline-block h-5 w-5 text-cyan-400" />
+            Build instantly, no guesswork.
           </div>
           <p className="max-w-2xl text-slate-400 sm:text-lg">
             Enter a casual website or image idea and get back a complete, copy-paste Viber prompt built for low-stress, modern creative workflows.
@@ -149,7 +153,7 @@ export default function HomePage() {
         <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] flex-1">
           <div className="space-y-6 rounded-3xl border border-slate-800 bg-slate-950/90 p-6 shadow-glow backdrop-blur-xl">
             <div className="space-y-3">
-              <p className="text-sm uppercase tracking-[0.3em] text-purple-400/80">Your idea</p>
+              <p className="text-sm uppercase tracking-[0.3em] text-purple-400/80"> Your idea </p>
               <textarea
                 rows={10}
                 value={description}
